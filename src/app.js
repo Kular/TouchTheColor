@@ -18,8 +18,10 @@ var MainLayer = cc.Layer.extend({
 var MainScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        var layer = new MainLayer();
-        this.addChild(layer);
+        var mainLayer = new MainLayer();
+        this.addChild(mainLayer);
+        var statusLayer = new StatusLayer();
+        this.addChild(statusLayer);
     }
 });
 
