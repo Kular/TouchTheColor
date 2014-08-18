@@ -1,4 +1,7 @@
 # Created by http://www.gitignore.io
+
+clear.sh
+
 ### Cocos ###
 frameworks/
 tools/
