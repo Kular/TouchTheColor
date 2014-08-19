@@ -11,7 +11,7 @@ else
     done
 fi
 
-echo "Sure to remove files above ? (y/n)"
+echo "Sure to remove ${length} files above ? (y/n)"
 read answer
 if [ "$answer" = "y" ]; then 
     find . -name "*~" -print0 | xargs -0 rm
