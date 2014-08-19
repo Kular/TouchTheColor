@@ -18,15 +18,15 @@ var StatusLayer = cc.Layer.extend({
             anchorX: 0.5,
             anchorY: 1
         });
-        this.addChild(this.labelTimer);
+        // this.addChild(this.labelTimer);
 
         this.labelScore = cc.LabelTTF.create("分数:\n" + this.score, "Helvetica", 50);
         this.labelScore.setColor(cc.color(0, 0, 0));
         this.labelScore.attr({
             x: winSize.width - 30,
-            y: winSize.height - 150,
+            y: winSize.height - 300,
             anchorX: 1,
-            anchorY: 0.5
+            anchorY: 1 
         });
         this.addChild(this.labelScore);
     },
