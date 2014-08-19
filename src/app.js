@@ -1,3 +1,4 @@
+var bTouched = false;
 var MainLayer = cc.LayerColor.extend({
     hong_black: null,
     huang_black: null,
@@ -21,7 +22,8 @@ var MainLayer = cc.LayerColor.extend({
         this.hong_black.attr({
             x: g_PosTop.x,
             y: g_PosTop.y,
-            scale: 0.46
+            scale: 0.46,
+            curPos: 0
         });
         this.addChild(this.hong_black);
         buttons.push(this.hong_black);
@@ -30,7 +32,8 @@ var MainLayer = cc.LayerColor.extend({
         this.huang_black.attr({
             x: g_PosLeft.x,
             y: g_PosLeft.y,
-            scale: 0.46
+            scale: 0.46,
+            curPos: 1
         });
         this.addChild(this.huang_black);
         buttons.push(this.huang_black);
@@ -39,7 +42,8 @@ var MainLayer = cc.LayerColor.extend({
         this.lan_black.attr({
             x: g_PosRight.x,
             y: g_PosRight.y,
-            scale: 0.46
+            scale: 0.46,
+            curPos: 2
         });
         this.addChild(this.lan_black);
         buttons.push(this.lan_black);
@@ -64,6 +68,11 @@ var MainLayer = cc.LayerColor.extend({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
             onTouchBegan: function (touch, event) {
+                if (bTouched) {
+                    return true;
+                } else {
+                    bTouched = true;
+                }
                 console.log("x:" + touch.getLocation().x + " y: " + touch.getLocation().y);
                 clockwiseTurn(buttons);
             },
@@ -88,11 +97,34 @@ var MainLayer = cc.LayerColor.extend({
 
 
 function clockwiseTurn (buttons) {
-    console.log("length: " + buttons.length);
     buttons.forEach(function (button) {
-        console.log("x: " + button.x); 
+        nextPosition(button);
     });
 } 
+
+function nextPosition (button) {
+    button.curPos = (button.curPos + 1) % 3;
+    var nextPos;
+    switch (button.curPos) {
+        case 0:
+            nextPos = g_PosTop;
+            break;
+        case 1:
+            nextPos = g_PosLeft;
+            break;
+        case 2:
+            nextPos = g_PosRight;
+            break;
+    }
+
+    button.runAction(
+        cc.sequence(
+            cc.moveTo(0.15, nextPos),
+            cc.callFunc(function(){bTouched = false;}, this)
+        )
+    );
+}
+
 var MainScene = cc.Scene.extend({
     onEnter:function () {
         this._super();

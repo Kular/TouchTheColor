@@ -30,7 +30,7 @@ sub main {
         for my $file (@results) {
             system(`rm $file`);
         }
-        print "\n==========\n", $length, ($length > 1) ? " files" : " file", "deleted successfully!\n==========\n";
+        print "\n==========\n", $length, ($length > 1) ? " files " : " file ", "deleted successfully!\n==========\n";
     } else {
         print "Cancelled.\n";
     }
