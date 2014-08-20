@@ -30,5 +30,9 @@ var StatusLayer = cc.Layer.extend({
         });
         this.addChild(this.labelScore);
     },
+    incr: function() {
+        this.score += 1;
+        this.labelScore.setString("分数:\n" + this.score);
+    }
     
 });

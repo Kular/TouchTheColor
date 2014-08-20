@@ -9,4 +9,20 @@ var g_PosRight = cc.p(453, 149);
 var g_PosBig = cc.p(221, 724);
 var g_PosSmall = cc.p(524, 839);
 
+if (typeof ColorType == "undefined") {
+    var ColorType = {
+        Red: 0, 
+        Yellow: 1,
+        Blue: 2
+    };
+};
 
+if (typeof TagOfLayer == "undefined") {
+    var TagOfLayer = {
+        MainLayer: 0,
+        StatusLayer: 1
+    };
+};
+
+var g_margin = 2;
+var g_width = 414;
