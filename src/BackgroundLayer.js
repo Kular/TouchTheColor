@@ -1,11 +1,16 @@
-var Rings = cc.Class.extend({
+var BackgroundLayer = cc.Layer.extend({
     list: [],
     
     ctor: function () {
+        this._super();
         for (var i = 0; i < this.list.length; i++) {
-            list.push(new TargetRing(i));
+            list.push(new Ring(i));
             this.addChild(list[i], 0, i);
         }
+    },
+    
+    getTargetColorType: function () {
+        return list[0].type;
     },
 
     shuffle: function () {
@@ -37,7 +42,7 @@ var Rings = cc.Class.extend({
         this.removeChildByTag(0);
         this.list.shift();
 
-        var newRing = new TargetRing(2);
+        var newRing = new Ring(2);
         this.list.push(newRing);
         this.addChild(newRing);
 

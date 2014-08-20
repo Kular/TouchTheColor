@@ -16,19 +16,14 @@ var MainLayer = cc.LayerColor.extend({
     },
     init: function () {
         this._super();
-        this.color = cc.color(200, 198, 224, 255); // set background color to White
+        this.color = cc.color(200, 198, 224, 255); // set background color 
         var size = cc.director.getWinSize();
-
-        cc.spriteFrameCache.addSpriteFrames(res.rings_plist);
-        this.spriteSheet = cc.SpriteBatchNode.create(res.rings);
-        this.addChild(this.spriteSheet);
 
         this.hong_black = cc.Sprite.create("#hong_black.png");
         this.hong_black.attr({
             x: g_PosTop.x,
             y: g_PosTop.y,
-            scale: 0.46,
-            curPos: 0,
+            curPos: PosType.Top,
             type: ColorType.Red
         });
         this.addChild(this.hong_black);
@@ -38,8 +33,7 @@ var MainLayer = cc.LayerColor.extend({
         this.huang_black.attr({
             x: g_PosLeft.x,
             y: g_PosLeft.y,
-            scale: 0.46,
-            curPos: 1,
+            curPos: PosType.Left,
             type: ColorType.Yellow
         });
         this.addChild(this.huang_black);
@@ -49,21 +43,20 @@ var MainLayer = cc.LayerColor.extend({
         this.lan_black.attr({
             x: g_PosRight.x,
             y: g_PosRight.y,
-            scale: 0.46,
-            curPos: 2,
+            curPos: PosType.Right,
             type: ColorType.Blue
         });
         this.addChild(this.lan_black);
         buttons.push(this.lan_black);
 
-        this.big_ring = cc.Sprite.create("#hong_red.png");
+        this.big_ring = cc.Sprite.create("#0_0.png");
         this.big_ring.attr({
             x: g_PosBig.x,
             y: g_PosBig.y,
         });
         this.addChild(this.big_ring);
 
-        this.small_ring = cc.Sprite.create("#lan_blue.png");
+        this.small_ring = cc.Sprite.create("#2_2.png");
         this.small_ring.attr({
             x: g_PosSmall.x,
             y: g_PosSmall.y,
@@ -120,13 +113,13 @@ MainLayer.rotateButtons = function (buttons) {
         button.curPos = (button.curPos + 1) % 3;
         var nextPos;
         switch (button.curPos) {
-            case 0:
+            case PosType.Top:
                 nextPos = g_PosTop;
                 break;
-            case 1:
+            case PosType.Left:
                 nextPos = g_PosLeft;
                 break;
-            case 2:
+            case PosType.Right:
                 nextPos = g_PosRight;
                 break;
         }
@@ -135,8 +128,8 @@ MainLayer.rotateButtons = function (buttons) {
             cc.spawn(
                 cc.moveTo(0.2, nextPos),
                 cc.sequence(
-                    cc.scaleTo(0.1, 0.2, 0.2),
-                    cc.scaleTo(0.1, 0.46, 0.46),
+                    cc.scaleTo(0.1, 0.5, 0.5),
+                    cc.scaleTo(0.1, 1, 1),
                     cc.callFunc(function(){bTouched = false;}, this)
                 )
             )
@@ -148,6 +141,7 @@ var MainScene = cc.Scene.extend({
     score: 0,
     onEnter:function () {
         this._super();
+        cc.spriteFrameCache.addSpriteFrames(res.rings_plist);
         var mainLayer = new MainLayer();
         this.addChild(mainLayer, 0, TagOfLayer.MainLayer);
         var statusLayer = new StatusLayer();

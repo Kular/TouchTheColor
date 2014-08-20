@@ -17,6 +17,14 @@ if (typeof ColorType == "undefined") {
     };
 };
 
+if (typeof PosType == "undefined") {
+    var PosType = {
+        Top: 0, 
+        Left: 1,
+        Right: 2
+    };
+};
+
 if (typeof TagOfLayer == "undefined") {
     var TagOfLayer = {
         MainLayer: 0,

@@ -1,4 +1,4 @@
-var TargetRing = cc.Sprite.extend({
+var Ring = cc.Sprite.extend({
     ctor: function (num) {
         var character = Math.floor(Math.random() * 9) % 3;
         var colorType = Math.floor(Math.random() * 9) % 3;
@@ -29,9 +29,6 @@ var TargetRing = cc.Sprite.extend({
             tag: num,
             type: colorType
         });
-    },
-    init: function () {
-    
     },
 
 });
