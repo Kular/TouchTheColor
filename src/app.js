@@ -1,7 +1,7 @@
 var buttons = [];
 var bTouched = false;
 
-var MainLayer = cc.LayerColor.extend({
+var MainLayer = cc.Layer.extend({
     hong_black: null,
     huang_black: null,
     lan_black: null,
@@ -16,7 +16,6 @@ var MainLayer = cc.LayerColor.extend({
     },
     init: function () {
         this._super();
-        this.color = cc.color(200, 198, 224, 255); // set background color 
         var size = cc.director.getWinSize();
 
         this.hong_black = cc.Sprite.create("#hong_black.png");
@@ -48,22 +47,8 @@ var MainLayer = cc.LayerColor.extend({
         });
         this.addChild(this.lan_black);
         buttons.push(this.lan_black);
-
-        this.big_ring = cc.Sprite.create("#0_0.png");
-        this.big_ring.attr({
-            x: g_PosBig.x,
-            y: g_PosBig.y,
-        });
-        this.addChild(this.big_ring);
-
-        this.small_ring = cc.Sprite.create("#2_2.png");
-        this.small_ring.attr({
-            x: g_PosSmall.x,
-            y: g_PosSmall.y,
-            scale: 0.5
-        });
-        this.addChild(this.small_ring);
         
+
         listener = cc.EventListener.create({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             swallowTouches: true,
@@ -80,9 +65,23 @@ var MainLayer = cc.LayerColor.extend({
                         bTouched = true;
                     }
                     // big_ring's type ?= button.type
-                    MainLayer.rotateButtons(buttons);     
-                    var statusLayer = button.getParent().getParent().getChildByTag(TagOfLayer.StatusLayer);
-                    statusLayer.incr();
+                    var backgroundLayer = cc.director.getRunningScene().getChildByTag(TagOfLayer.BackgroundLayer);
+                    var statusLayer = cc.director.getRunningScene().getChildByTag(TagOfLayer.StatusLayer);
+                    var targetColorType = backgroundLayer.getTargetColorType();
+                    console.log("type: " + button.type + " color: " + targetColorType);
+                    if (targetColorType == button.type) {
+                        MainLayer.rotateButtons(buttons);     
+                        statusLayer.incr();
+                        backgroundLayer.shuffle();
+                    } else {
+                        var health = statusLayer.decr();
+                        if (health <= 0) {
+                            statusLayer.gameOver();
+                        }
+
+                        bTouched = false;
+                    }
+
                     return true;
                 }
                 return false;
@@ -102,7 +101,6 @@ var MainLayer = cc.LayerColor.extend({
         return true;
     },
     onExit: function () {
-        this.listener.release();
         this._super();
     }
 
@@ -138,14 +136,16 @@ MainLayer.rotateButtons = function (buttons) {
 }
 
 var MainScene = cc.Scene.extend({
-    score: 0,
     onEnter:function () {
         this._super();
         cc.spriteFrameCache.addSpriteFrames(res.rings_plist);
+        var bgLayer = new BackgroundLayer();
+        this.addChild(bgLayer, 0, TagOfLayer.BackgroundLayer);
         var mainLayer = new MainLayer();
         this.addChild(mainLayer, 0, TagOfLayer.MainLayer);
         var statusLayer = new StatusLayer();
         this.addChild(statusLayer, 0, TagOfLayer.StatusLayer);
-    }
+    } 
+
 });
 

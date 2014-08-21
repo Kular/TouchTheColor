@@ -28,9 +28,8 @@ if (typeof PosType == "undefined") {
 if (typeof TagOfLayer == "undefined") {
     var TagOfLayer = {
         MainLayer: 0,
-        StatusLayer: 1
+        StatusLayer: 1,
+        BackgroundLayer: 2
     };
 };
 
-var g_margin = 2;
-var g_width = 414;

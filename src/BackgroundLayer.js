@@ -1,16 +1,21 @@
-var BackgroundLayer = cc.Layer.extend({
+var BackgroundLayer = cc.LayerColor.extend({
     list: [],
-    
+
     ctor: function () {
         this._super();
-        for (var i = 0; i < this.list.length; i++) {
-            list.push(new Ring(i));
-            this.addChild(list[i], 0, i);
+        this.init();
+    },
+    init: function () {
+        this._super();
+        this.color = cc.color(200, 198, 224, 255); // set background color 
+        for (var i = 0; i < 3; i++) {
+            this.list.push(new Ring(i));
+            this.addChild(this.list[i], 0, i);
         }
     },
     
     getTargetColorType: function () {
-        return list[0].type;
+        return this.list[0].type;
     },
 
     shuffle: function () {
@@ -20,16 +25,18 @@ var BackgroundLayer = cc.Layer.extend({
         
         c0.runAction(
             cc.spawn(
-                cc.scaleTo(0.2, 0.1, 0.1),
-                cc.moveTo(0.2, cc.p(-39, g_PosBig.y)
+                cc.scaleTo(0.2, 0, 0),
+                cc.moveTo(0.2, cc.p(-40, g_PosBig.y))
             )
         );
+
         c1.runAction(
             cc.spawn(
                 cc.scaleTo(0.2, 1, 1),
                 cc.moveTo(0.2, g_PosBig)
             )
         );
+
         c2.runAction(
             cc.spawn(
                 cc.scaleTo(0.2, 0.5, 0.5),
@@ -47,13 +54,11 @@ var BackgroundLayer = cc.Layer.extend({
         this.addChild(newRing);
 
         for (var i = 0; i < this.list.length; i++) {
-            list[i].setTag(i);
+            this.list[i].setTag(i);
         }
+
+        cc.audioEngine.playEffect(res.ding_mp3);
     },
 
-    cleanup: function() {
-        this.list.release();
-    }
-    
 
 });

@@ -15,8 +15,8 @@ var Ring = cc.Sprite.extend({
                 sc = 0.5;
                 break;
             case 2:
-                pos = g_PosTiny;
-                sc = 0.1;
+                pos = cc.p(cc.director.getWinSize().width + 20, g_PosSmall.y);
+                sc = 0.0;
                 break;
         }
         this._super(filename);
