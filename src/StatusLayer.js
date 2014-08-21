@@ -21,7 +21,6 @@ var StatusLayer = cc.Layer.extend({
             y: winSize.height - 300,
             anchorX: 1,
             anchorY: 1,
-            scale: 0.5
         });
         this.addChild(this.coin);
 
@@ -35,13 +34,12 @@ var StatusLayer = cc.Layer.extend({
         });
         this.addChild(this.labelScore);
 
-        this.heart = cc.Sprite.create("#coin.png");
+        this.heart = cc.Sprite.create("#heart.png");
         this.heart.attr({
             x: this.coin.x,
-            y: this.coin.y - 60,
+            y: this.coin.y - 70,
             anchorX: 1,
             anchorY: 1,
-            scale: 0.5
         });
         this.addChild(this.heart);
         
@@ -55,13 +53,12 @@ var StatusLayer = cc.Layer.extend({
         });
         this.addChild(this.labelHealth);
 
-        this.timer = cc.ProgressTimer.create(cc.Sprite.create("#coin.png"));
+        this.timer = cc.ProgressTimer.create(cc.Sprite.create("#donuts.png"));
         this.timer.attr({
-            x: this.heart.x,
-            y: this.heart.y - 60,
-            anchorX: 1,
-            anchorY: 1,
-            isOver: false
+            x: g_PosBig.x,
+            y: g_PosBig.y,
+            anchorX: 0.5,
+            anchorY: 0.5
         });
         this.timer.type = cc.ProgressTimer.TYPE_RADIAL;
         this.addChild(this.timer);
@@ -79,7 +76,7 @@ var StatusLayer = cc.Layer.extend({
                 this.timer.percentage = 0;
             }
         } else {
-            this.timer.percentage += 1.1;
+            this.timer.percentage += 1.0;
         }
     },
 
