@@ -13,6 +13,7 @@ var MainLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
         this.init();
+        bTouched = false;
     },
     init: function () {
         this._super();
@@ -58,7 +59,7 @@ var MainLayer = cc.Layer.extend({
                 var buttonSize = button.getContentSize();
                 var rect = cc.rect(0, 0, buttonSize.width, buttonSize.height);
                 if (cc.rectContainsPoint(rect, locationInNode)) {
-                    console.log("type: " + button.type);
+                    // console.log("type: " + button.type);
                     if (bTouched) {
                         return true;
                     } else {
@@ -68,7 +69,7 @@ var MainLayer = cc.Layer.extend({
                     var backgroundLayer = cc.director.getRunningScene().getChildByTag(TagOfLayer.BackgroundLayer);
                     var statusLayer = cc.director.getRunningScene().getChildByTag(TagOfLayer.StatusLayer);
                     var targetColorType = backgroundLayer.getTargetColorType();
-                    console.log("type: " + button.type + " color: " + targetColorType);
+                    // console.log("type: " + button.type + " color: " + targetColorType);
                     if (targetColorType == button.type) {
                         MainLayer.rotateButtons(buttons);     
                         statusLayer.incr();

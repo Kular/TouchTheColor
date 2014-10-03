@@ -1,5 +1,5 @@
 var BackgroundLayer = cc.LayerColor.extend({
-    list: [],
+    list: null,
 
     ctor: function () {
         this._super();
@@ -7,6 +7,7 @@ var BackgroundLayer = cc.LayerColor.extend({
     },
     init: function () {
         this._super();
+        this.list = [];
         this.color = cc.color(200, 198, 224, 255); // set background color 
         for (var i = 0; i < 3; i++) {
             this.list.push(new Ring(i));
